@@ -33,6 +33,14 @@ final routerProvider = Provider<GoRouter>((ref) {
   return AppRouter.build(auth);
 });
 
+final teamApiProvider = Provider<TeamApi>(
+  (ref) => TeamApi(ref.watch(apiClientProvider)),
+);
+
+final rosterApiProvider = Provider<RosterApi>(
+  (ref) => RosterApi(ref.watch(apiClientProvider)),
+);
+
 final competitionApiProvider = Provider<CompetitionApi>(
   (ref) => CompetitionApi(ref.watch(apiClientProvider)),
 );
