@@ -8,14 +8,21 @@ class RosterApi {
 
   RosterApi(this._client);
 
-  Future<List<RosterEntry>> listByTeam(String teamId) => _client.getList(
-        '/api/v1/teams/$teamId/roster',
-        RosterEntry.fromJson,
-      );
+  Future<List<RosterEntry>> listByTeam(
+    String teamId, {
+    String? competitionId,
+  }) {
+    final queryParams = competitionId != null ? '?competitionId=$competitionId' : '';
+    return _client.getList(
+      '/api/v1/teams/$teamId/roster$queryParams',
+      RosterEntry.fromJson,
+    );
+  }
 
   Future<void> add({
     required String teamId,
     required String athleteId,
+    String? competitionId,
     String? nickname,
     int? number,
   }) =>
@@ -23,6 +30,7 @@ class RosterApi {
         '/api/v1/teams/$teamId/roster',
         {
           'athleteId': athleteId,
+          if (competitionId != null) 'competitionId': competitionId,
           'nickname': ?nickname,
           'number': ?number,
         },
