@@ -1,0 +1,23 @@
+title: Flag Referee App — Documentação
+description: >-
+  Documentação do Referee App do Flag Platform: fluxo de telas, arquitetura
+  e operação da mesa.
+baseurl: "/flag_referee_app"
+url: "https://cesargranelli.github.io"
+
+theme: minima
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+exclude:
+  - "*.drawio"
+  - "*.drawio.svg"

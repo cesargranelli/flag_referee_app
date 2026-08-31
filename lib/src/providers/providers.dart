@@ -1,6 +1,6 @@
-import 'package:flag_api/flag_api.dart';
-import 'package:flag_core/flag_core.dart';
-import 'package:flag_domain/flag_domain.dart';
+import 'package:flag_referee_app/src/api/flag_api.dart';
+import 'package:flag_referee_app/src/core/flag_core.dart';
+import 'package:flag_referee_app/src/domain/flag_domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +32,14 @@ final routerProvider = Provider<GoRouter>((ref) {
   final auth = ref.read(authControllerProvider);
   return AppRouter.build(auth);
 });
+
+final teamApiProvider = Provider<TeamApi>(
+  (ref) => TeamApi(ref.watch(apiClientProvider)),
+);
+
+final rosterApiProvider = Provider<RosterApi>(
+  (ref) => RosterApi(ref.watch(apiClientProvider)),
+);
 
 final competitionApiProvider = Provider<CompetitionApi>(
   (ref) => CompetitionApi(ref.watch(apiClientProvider)),
