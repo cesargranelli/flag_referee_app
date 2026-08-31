@@ -18,6 +18,4 @@ defaults:
     values:
       layout: page
 
-exclude:
-  - "*.drawio"
-  - "*.drawio.svg"
+# Arquivos .drawio são servidos como estáticos (sem processamento Jekyll).
