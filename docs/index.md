@@ -10,7 +10,7 @@ Documentação técnica do Referee App do Flag Platform (app da mesa).
 
 | Documento | Conteúdo |
 |-----------|----------|
-| [Fluxo de telas](fluxo-de-telas.md) | Navegação completa: rotas, autenticação, operação de partida, check-in |
+| [Fluxo de telas](fluxo-de-telas.html) | Navegação completa: rotas, autenticação, operação de partida, check-in |
 | [Diagrama visual (.drawio)](fluxo-de-telas.drawio) | Diagrama editável no draw.io |
 
 ## Referências
