@@ -5,6 +5,7 @@ export 'models/conference.dart';
 export 'models/division.dart';
 export 'models/venue.dart';
 export 'models/team.dart';
+export 'models/competition_team.dart';
 export 'models/round.dart';
 export 'models/game.dart';
 export 'models/game_batch.dart';
