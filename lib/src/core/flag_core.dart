@@ -1,4 +1,5 @@
 export 'config/app_config.dart';
+export 'config/firebase_options.dart';
 export 'layout/app_layout.dart';
 export 'theme/app_colors.dart';
 export 'theme/app_text_styles.dart';

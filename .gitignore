@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter platform directories (created by flutter create)
+/linux/
+/macos/
+/web/
+/windows/
+
+# Flutter metadata
+.metadata

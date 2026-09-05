@@ -1,4 +1,5 @@
 import 'package:flag_referee_app/src/api/flag_api.dart';
+import 'package:flag_referee_app/src/auth/firebase_auth_service.dart';
 import 'package:flag_referee_app/src/core/flag_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             email: _emailController.text.trim(),
             password: _passwordController.text,
           );
+    } on FirebaseAuthException catch (e) {
+      // Erro de autenticação Firebase (issue #33)
+      setState(() {
+        _errorMessage = e.message.isNotEmpty
+            ? e.message
+            : 'E-mail ou senha incorretos';
+      });
     } on RepositoryException catch (e) {
       // Mesagem amigável em vez de ecoar o texto cru da API (issue #425#21).
       setState(() {
