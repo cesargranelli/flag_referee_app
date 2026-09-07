@@ -1,11 +1,12 @@
 import '../enums/athlete_position.dart';
 
-/// Entrada do elenco de um time.
+/// Entrada do elenco de um time em uma competição.
 ///
-/// Shape de `GET /api/v1/teams/{teamId}/roster`.
+/// Shape de `GET /api/v1/teams/{teamId}/competitions/{competitionId}/roster`.
+/// Conforme ADR-006, a entrada referencia o `rosterId` (não o `teamId`).
 class RosterEntry {
   final String id;
-  final String teamId;
+  final String rosterId;
   final String athleteId;
   final String athleteName;
   final String? athleteNickname;
@@ -18,7 +19,7 @@ class RosterEntry {
 
   const RosterEntry({
     required this.id,
-    required this.teamId,
+    required this.rosterId,
     required this.athleteId,
     required this.athleteName,
     required this.status,
@@ -32,7 +33,7 @@ class RosterEntry {
 
   factory RosterEntry.fromJson(Map<String, dynamic> json) => RosterEntry(
         id: json['id'] as String,
-        teamId: json['teamId'] as String,
+        rosterId: json['rosterId'] as String,
         athleteId: json['athleteId'] as String,
         athleteName: json['athleteName'] as String,
         athleteNickname: json['athleteNickname'] as String?,
@@ -50,7 +51,7 @@ class RosterEntry {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'teamId': teamId,
+        'rosterId': rosterId,
         'athleteId': athleteId,
         'athleteName': athleteName,
         'status': status,

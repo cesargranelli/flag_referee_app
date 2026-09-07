@@ -13,9 +13,10 @@ class TeamApi {
   TeamApi(this._client);
 
   /// Lista os times inscritos em uma competição (via competition_team).
-  Future<List<Team>> listByCompetition(String competitionId) => _client.getList(
+  Future<List<CompetitionTeam>> listByCompetition(String competitionId) =>
+      _client.getList(
         '/api/v1/competitions/$competitionId/teams',
-        Team.fromJson,
+        CompetitionTeam.fromJson,
       );
 
   /// Detalhes de um time pelo ID.
@@ -35,9 +36,9 @@ class TeamApi {
         '/api/v1/organizations/$organizationId/teams',
         {
           'name': name,
-          if (shortName != null) 'shortName': shortName,
-          if (sportName != null) 'sportName': sportName,
-          if (logoUrl != null) 'logoUrl': logoUrl,
+          'shortName': ?shortName,
+          'sportName': ?sportName,
+          'logoUrl': ?logoUrl,
           'status': status,
         },
         Team.fromJson,
@@ -56,9 +57,9 @@ class TeamApi {
         '/api/v1/teams/$id',
         {
           'name': name,
-          if (shortName != null) 'shortName': shortName,
-          if (sportName != null) 'sportName': sportName,
-          if (logoUrl != null) 'logoUrl': logoUrl,
+          'shortName': ?shortName,
+          'sportName': ?sportName,
+          'logoUrl': ?logoUrl,
           'status': status,
         },
         Team.fromJson,
