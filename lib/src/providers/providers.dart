@@ -4,7 +4,10 @@ import 'package:flag_referee_app/src/domain/flag_domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../auth/auth_controller.dart';
+import 'package:flag_referee_app/data/repositories/auth_controller.dart';
+import 'package:flag_referee_app/data/repositories/auth_repository.dart';
+import 'package:flag_referee_app/data/services/auth_service.dart';
+import 'package:flag_referee_app/ui/auth/view_models/login_view_model.dart';
 import '../router/app_router.dart';
 
 final sessionManagerProvider = Provider<SessionManager>(
@@ -15,17 +18,32 @@ final apiClientProvider = Provider<ApiClient>(
   (ref) => ApiClient(session: ref.watch(sessionManagerProvider)),
 );
 
-final authApiProvider = Provider<AuthApi>(
-  (ref) => AuthApi(ref.watch(apiClientProvider)),
+final authServiceProvider = Provider<AuthService>(
+  (ref) => AuthService(ref.watch(apiClientProvider)),
 );
+
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
+  return AuthRepository(
+    service: ref.watch(authServiceProvider),
+    session: ref.watch(sessionManagerProvider),
+  );
+});
 
 final authControllerProvider = ChangeNotifierProvider<AuthController>((ref) {
   final controller = AuthController(
-    session: ref.watch(sessionManagerProvider),
-    api: ref.watch(authApiProvider),
+    repository: ref.watch(authRepositoryProvider),
   );
   controller.restore();
   return controller;
+});
+
+final loginViewModelProvider =
+    ChangeNotifierProvider.autoDispose<LoginViewModel>((ref) {
+  return LoginViewModel(
+    repository: ref.watch(authRepositoryProvider),
+    onAuthStateChanged: () =>
+        ref.read(authControllerProvider).syncFromRepository(),
+  );
 });
 
 final routerProvider = Provider<GoRouter>((ref) {

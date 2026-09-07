@@ -1,12 +1,13 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// Gerencia a sessão do usuário autenticado (token JWT e roles).
-///
-/// Uso: [Public App] não precisa; [Referee App] e [Admin Web] usam após login.
+/// Gerencia a sessão do usuário autenticado (token JWT, credenciais e cache offline).
 class SessionManager {
   static const _tokenKey = 'auth_token';
   static const _rolesKey = 'auth_roles';
   static const _userNameKey = 'auth_user_name';
+  static const _userIdKey = 'auth_user_id';
+  static const _emailKey = 'auth_email';
+  static const _cachedUserKey = 'auth_cached_user';
   static const _keepConnectedKey = 'auth_keep_connected';
 
   final FlutterSecureStorage _storage;
@@ -18,11 +19,23 @@ class SessionManager {
     required String token,
     required List<String> roles,
     String? userName,
+    String? userId,
+    String? email,
+    String? cachedUserJson,
   }) async {
     await _storage.write(key: _tokenKey, value: token);
     await _storage.write(key: _rolesKey, value: roles.join(','));
     if (userName != null) {
       await _storage.write(key: _userNameKey, value: userName);
+    }
+    if (userId != null) {
+      await _storage.write(key: _userIdKey, value: userId);
+    }
+    if (email != null) {
+      await _storage.write(key: _emailKey, value: email);
+    }
+    if (cachedUserJson != null) {
+      await _storage.write(key: _cachedUserKey, value: cachedUserJson);
     }
   }
 
@@ -35,6 +48,9 @@ class SessionManager {
   }
 
   Future<String?> getUserName() => _storage.read(key: _userNameKey);
+  Future<String?> getUserId() => _storage.read(key: _userIdKey);
+  Future<String?> getEmail() => _storage.read(key: _emailKey);
+  Future<String?> getCachedUserJson() => _storage.read(key: _cachedUserKey);
 
   Future<bool> isAuthenticated() async => (await getToken()) != null;
 
@@ -48,6 +64,9 @@ class SessionManager {
     await _storage.delete(key: _tokenKey);
     await _storage.delete(key: _rolesKey);
     await _storage.delete(key: _userNameKey);
+    await _storage.delete(key: _userIdKey);
+    await _storage.delete(key: _emailKey);
+    await _storage.delete(key: _cachedUserKey);
     await _storage.delete(key: _keepConnectedKey);
   }
 }

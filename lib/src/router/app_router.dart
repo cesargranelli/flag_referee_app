@@ -2,11 +2,11 @@ import 'package:flag_referee_app/src/core/flag_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../auth/auth_controller.dart';
+import 'package:flag_referee_app/data/repositories/auth_controller.dart';
+import 'package:flag_referee_app/ui/auth/widgets/login_screen.dart';
 import '../screens/check_in_screen.dart';
 import '../screens/game_operation_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/login_screen.dart';
 
 /// Rotas do Referee App com proteção de autenticação.
 class AppRouter {

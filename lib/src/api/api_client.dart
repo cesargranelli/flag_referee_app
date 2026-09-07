@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flag_referee_app/src/core/flag_core.dart';
 
@@ -6,8 +7,8 @@ import 'repository_exception.dart';
 
 /// Cliente HTTP da API REST do Flag Platform.
 ///
-/// Usa [AppConfig.apiBaseUrl] como base URL e injeta o token JWT via
-/// [SessionManager] quando autenticado.
+/// Usa [AppConfig.apiBaseUrl] como base URL e injeta o token Firebase Auth /
+/// SessionManager quando autenticado.
 class ApiClient {
   final Dio dio;
   final SessionManager _session;
@@ -29,7 +30,12 @@ class ApiClient {
   ApiClient get public => this;
 
   Future<Map<String, dynamic>> _headers() async {
-    final token = await _session.getToken();
+    String? token;
+    try {
+      token = await FirebaseAuth.instance.currentUser?.getIdToken();
+    } catch (_) {}
+    token ??= await _session.getToken();
+
     return {
       'Content-Type': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
